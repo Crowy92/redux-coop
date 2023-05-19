@@ -1,14 +1,21 @@
-import React, { useState } from "react";
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { asyncWithdraw } from "../../actions";
 
 export default function Withdraw() {
-  const [balance, setBalance] = useState(0);
+  const balance = useSelector((state) => state.balanceReducer.balance);
+  const dispatch = useDispatch();
+  const loading = useSelector((state) => state.balanceReducer.loading);
+
   function handleWithdraw() {
-    setBalance((prevBalance) => prevBalance - 100);
+    dispatch(asyncWithdraw());
   }
   return (
     <div>
       <h3>Withdraw Page: {balance}</h3>
-      <button onClick={handleWithdraw}>Withdraw</button>
+      <button disabled={loading} onClick={handleWithdraw}>
+        Withdraw
+      </button>
     </div>
   );
 }

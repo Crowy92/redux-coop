@@ -1,15 +1,24 @@
-import React, { useState } from "react";
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { asyncDeposit } from "../../actions";
 
 export default function Deposit() {
-  const [balance, setBalance] = useState(0);
+  const balance = useSelector((state) => {
+    console.log({ state });
+    return state.balanceReducer.balance;
+  });
+  const loading = useSelector((state) => state.balanceReducer.loading);
+  const dispatch = useDispatch();
 
   function handleDeposit() {
-    setBalance((prevBalance) => prevBalance + 100);
+    dispatch(asyncDeposit());
   }
   return (
     <div>
       <h3>Deposit Page: {balance}</h3>
-      <button onClick={handleDeposit}>Deposit</button>
+      <button disabled={loading} onClick={handleDeposit}>
+        Deposit
+      </button>
     </div>
   );
 }
