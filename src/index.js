@@ -6,16 +6,17 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
 //reduction
-import { createStore, combineReducers, applyMiddleware } from "redux";
+import { configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
 import balanceReducer from "./reducers/balanceReducer";
 import loanReducer from "./reducers/loanReducer";
-import thunk from "redux-thunk";
 
-const store = createStore(
-  combineReducers({ balanceReducer, loanReducer }),
-  applyMiddleware(thunk)
-);
+const store = configureStore({
+  reducer: {
+    balanceReducer: balanceReducer,
+    loanReducer: loanReducer,
+  },
+});
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
